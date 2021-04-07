@@ -88,23 +88,23 @@ void wave_gen()
     while (true) {
         for (i = 0, out = 0; i < 240; i++) {
             if ((0 <= i) && (i < 80)) {
-                if ((sel == 0) && (out < 0.909)) {
+                if ((sel == 3) && (out < 0.909)) {
                     out += add_0;
-                } else if ((sel == 1) && (out < 0.908)) {
-                    out += add_1;
                 } else if ((sel == 2) && (out < 0.908)) {
+                    out += add_1;
+                } else if ((sel == 1) && (out < 0.908)) {
                     out += add_2;
-                } else if ((sel == 3) && (out < 0.908)) {
+                } else if ((sel == 0) && (out < 0.908)) {
                     out += add_3;
                 }
             } else if ((160 < i) && (i <= 240)) {
-                if ((sel == 0) && (i > 160)) {
+                if ((sel == 3) && (i > 160)) {
                     out -= add_0;
-                } else if ((sel == 1) && (i > 200)) {
+                } else if ((sel == 2) && (i > 200)) {
                     out -= add_1;
-                } else if ((sel == 2) && (i > 220)) {
+                } else if ((sel == 1) && (i > 220)) {
                     out -= add_2;
-                } else if ((sel == 3) && (i > 230)) {
+                } else if ((sel == 0) && (i > 230)) {
                     out -= add_3;
                 }
             } else {
@@ -113,6 +113,22 @@ void wave_gen()
             Aout = out;
             ThisThread::sleep_for(1ms);
         }
+    }
+}
+
+void wave_sample()
+{
+    int i = 0;
+    float ADC_value[sample_times];
+
+    ThisThread::sleep_for(2s);
+    for (i = 0; i < sample_times; i++) {
+        ADC_value[i] = Ain;
+        ThisThread::sleep_for(10ms);
+    }
+    for (i = 0; i < sample_times; i++) {
+        printf("%f\r\n", ADC_value[i]);
+        ThisThread::sleep_for(50ms);
     }
 }
 
